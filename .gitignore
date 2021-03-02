@@ -1,0 +1,6 @@
+/venv/
+.idea/
+*.log
+__pycache__
+*.xlsx
+.DS_Store
