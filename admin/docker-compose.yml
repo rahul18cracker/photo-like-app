@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      # docker file port : local host port
+      - 8000:8000
+    volumes:
+      # gives file connection, local machine : container
+      # change made in this local WS and docker container will sync at disk level
+      - .:/app
