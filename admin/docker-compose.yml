@@ -11,3 +11,23 @@ services:
       # gives file connection, local machine : container
       # change made in this local WS and docker container will sync at disk level
       - .:/app
+    depends_on:
+      - db
+
+  # DB related things
+  db:
+    image: mysql:5.7.22
+    # use always otherwise container restarts also get clubbed in with this
+    restart: always
+    environment:
+      # only for dev and test environment, never put such value in plain text
+      MYSQL_DATABASE: admin
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    # adding this to connect to DB in IDE and dump data quickly :)
+    ports:
+     # outside port : inside docker container port
+     - 33066:3306
