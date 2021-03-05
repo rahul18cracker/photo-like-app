@@ -70,7 +70,15 @@ class ProductViewSet(viewsets.ViewSet):
         :return:
         :rtype:
         """
-        pass
+        product = Product.objects.get(id=pk)
+        # Update the product with the data provided by the request
+        serializer = ProductSerializer(instance=product,
+                                       data=request.data)
+        # remember to validate the serializer
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data,
+                        status=status.HTTP_202_ACCEPTED)
 
     def destroy(self,
                 request: 'HTTP request',
@@ -84,4 +92,7 @@ class ProductViewSet(viewsets.ViewSet):
         :return:
         :rtype:
         """
-        pass
+        # TODO : Add validation to see if the product is present
+        product = Product.objects.get(id=pk)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
