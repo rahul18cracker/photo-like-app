@@ -1,9 +1,14 @@
 # Create your views here.
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .models import Product
+from .models import Product, User
 from .serializers import ProductSerializer
+import random
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ProductViewSet(viewsets.ViewSet):
@@ -96,3 +101,25 @@ class ProductViewSet(viewsets.ViewSet):
         product = Product.objects.get(id=pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserAPIView(APIView):
+    """
+    This would be used to do user based interaction and create users
+    """
+
+    def get(self, _) -> 'response object':
+        """
+        Server a get request about a user of the service. It will return a  random
+        user
+        :param _: None
+        :type _:
+        :return:
+        :rtype:
+        """
+        users = User.objects.all()
+        logger.error(users)
+        user = random.choice(users)
+        return Response({
+            'id': user.id
+        })

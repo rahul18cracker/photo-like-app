@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProductViewSet
+from .views import ProductViewSet, UserAPIView
 
 urlpatterns = [
     path('products',
@@ -15,4 +15,6 @@ urlpatterns = [
                  'put': 'update',  # PUT method wil call update function
                  'delete': 'destroy'  # DELETE method wil call destroy function
              })),
+    path('user',
+         UserAPIView.as_view())
 ]
