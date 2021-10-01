@@ -5,8 +5,10 @@ from rest_framework.views import APIView
 
 from .models import Product, User
 from .serializers import ProductSerializer
+from .producer import publish
 import random
 import logging
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +31,7 @@ class ProductViewSet(viewsets.ViewSet):
         # pack data in Django format to decode later and receiver side
         serializer = ProductSerializer(product,
                                        many=True)
+        publish()
         return Response(serializer.data)
 
     def create(self,
